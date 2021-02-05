@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using static System.Console;
 
 namespace OrganizeFolders
 {
     public class FolderHelper
     {
-        public string InputDirectoryString { get; }
+
+        public string LoggerPath { get; set; }
         private string documentPath;
         private string picturePath;
         private string executablesPath;
@@ -14,14 +17,15 @@ namespace OrganizeFolders
         private string musicPath;
 
         private static List<string> docExtensions = new List<string> { "doc", "docx", "odt", "pdf", "txt", "xlx", "xlxs", "xps", };
-        //dodatkowe rozszerania - lista
 
-        //logger ustalić gdzie ma sie utworzyć i móc go zapisać
 
-        internal async static void FileCreated(object source, FileSystemEventArgs e)
+        internal void FileCreated(object source, FileSystemEventArgs e)
         {
-            WriteLine($"* File created : {e.Name} - type: {e.ChangeType}");
-            //logger - nazwa, co sie stalo, gdzie
+            using (StreamWriter sw = File.AppendText(LoggerPath))
+            {
+              sw.WriteLine($"--> File created on {DateTime.Now.ToString("yyyy-MM-dd")} : {e.Name} - type: {e.ChangeType}");
+            }
+
         }
 
         internal async static void FileRenamed(object source, FileSystemEventArgs e)
@@ -31,7 +35,7 @@ namespace OrganizeFolders
 
         internal async static void SortFiles()
         {
-        
+
         }
 
 
