@@ -25,7 +25,7 @@ namespace OrganizeFolders
                     s.WhenStopped(fwatch => fwatch.Stop());
                 });
 
-                //how to run
+                //how to run the service
                 x.RunAsLocalSystem();
 
                 x.SetServiceName("FolderOrganizerService");

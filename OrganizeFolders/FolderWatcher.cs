@@ -17,7 +17,6 @@ namespace OrganizeFolders
             {
                 Directory.CreateDirectory(newDirectoryPath);
             }
-            WriteLine("Called ctor :/");
         }
         public void Start()
         {

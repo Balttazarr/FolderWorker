@@ -29,6 +29,12 @@ namespace OrganizeFolders
 
         }
 
+        internal async static void SortFiles()
+        {
+        
+        }
+
+
 
     }
 }
