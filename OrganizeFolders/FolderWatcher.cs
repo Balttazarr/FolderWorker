@@ -21,6 +21,7 @@ namespace OrganizeFolders
                 Directory.CreateDirectory(newDirectoryPath);
             }
 
+            //create the Logger.txt file if doesn't exists
             LoggerFile = PathToWatch + "\\" + LoggerFile;
             try
             {
@@ -30,7 +31,7 @@ namespace OrganizeFolders
                 }
                 using (FileStream fs = File.Create(LoggerFile))
                 {
-                    byte[] info = new UTF8Encoding(true).GetBytes("Logger saving all actions dones on the managed folder.\n________________________________________\n");
+                    byte[] info = new UTF8Encoding(true).GetBytes("Logger - saving all actions done on the chosen folder.\n________________________________________\n");
                     //add infos to file
                     fs.Write(info, 0, info.Length);
                 }
@@ -52,17 +53,18 @@ namespace OrganizeFolders
             folderHelper.LoggerPath = LoggerFile;
 
             var inputFileWatcher = new FileSystemWatcher(PathToWatch);
-            inputFileWatcher.IncludeSubdirectories = false;
+            inputFileWatcher.IncludeSubdirectories = true;
             inputFileWatcher.InternalBufferSize = 32768; // 32 KB
             inputFileWatcher.Filter = "*.*"; // default
             inputFileWatcher.NotifyFilter = NotifyFilters.LastWrite
                                           | NotifyFilters.FileName
-                                          | NotifyFilters.DirectoryName;
+                                          | NotifyFilters.DirectoryName
+                                          | NotifyFilters.Size;
 
             inputFileWatcher.Created += folderHelper.FileCreated;
-            //inputFileWatcher.Changed += FileChanged;
-            //inputFileWatcher.Deleted += FileDeleted;
-            //inputFileWatcher.Renamed += FileRenamed;
+            inputFileWatcher.Renamed += folderHelper.FileRenamed;
+            inputFileWatcher.Deleted += folderHelper.FileDeleted;
+
             //inputFileWatcher.Error += WatcherError;
 
             inputFileWatcher.EnableRaisingEvents = true;
