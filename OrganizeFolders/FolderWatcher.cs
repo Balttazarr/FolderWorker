@@ -34,8 +34,9 @@ namespace OrganizeFolders
                     byte[] info = new UTF8Encoding(true).GetBytes("Logger - saving all actions done on the chosen folder.\n________________________________________\n");
                     //add infos to file
                     fs.Write(info, 0, info.Length);
+                    fs.Flush();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -53,7 +54,7 @@ namespace OrganizeFolders
             folderHelper.LoggerPath = LoggerFile;
 
             var inputFileWatcher = new FileSystemWatcher(PathToWatch);
-            inputFileWatcher.IncludeSubdirectories = true;
+            inputFileWatcher.IncludeSubdirectories = false;
             inputFileWatcher.InternalBufferSize = 32768; // 32 KB
             inputFileWatcher.Filter = "*.*"; // default
             inputFileWatcher.NotifyFilter = NotifyFilters.LastWrite

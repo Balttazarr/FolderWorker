@@ -15,6 +15,8 @@ namespace OrganizeFolders
 
         static void Main(string[] args)
         {
+            // TODO: Allow a user to choose a folder, while installing the service
+
             //string pathToWatch = "";
             //if (args[0] != "not")
             //{
@@ -45,6 +47,8 @@ namespace OrganizeFolders
             int exitCodeValue = (int)Convert.ChangeType(exitCode, exitCode.GetTypeCode());
             Environment.ExitCode = exitCodeValue;
 
+
         }
+
     }
 }
